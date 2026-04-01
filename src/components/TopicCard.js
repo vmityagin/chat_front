@@ -1,7 +1,7 @@
 import React from 'react';
 import { apiFetch } from '../lib/apiClient';
 
-export default function TopicCard({ topic, isActive, onSelect, currentUserId, onDelete }) {
+export default function TopicCard({ topic, isActive, onSelect, currentUserId, onDelete, onPin }) {
   const isOwn = topic.createdBy && topic.createdBy.toString() === currentUserId?.toString();
 
   async function handleDelete(e) {
@@ -9,6 +9,19 @@ export default function TopicCard({ topic, isActive, onSelect, currentUserId, on
     try {
       await apiFetch(`/api/topics/${topic._id}`, { method: 'DELETE' });
       onDelete(topic._id);
+    } catch {
+      // ошибка уже в тосте
+    }
+  }
+
+  async function handlePin(e) {
+    e.stopPropagation();
+    try {
+      const updated = await apiFetch(`/api/topics/${topic._id}`, {
+        method: 'PATCH',
+        body: { isPinned: !topic.isPinned },
+      });
+      onPin(updated);
     } catch {
       // ошибка уже в тосте
     }
@@ -38,16 +51,27 @@ export default function TopicCard({ topic, isActive, onSelect, currentUserId, on
         )}
         <span className="topic-card__meta">{topic.messageCount} сообщ.</span>
       </div>
-      {isOwn && (
+      <div className="topic-card__actions">
         <button
-          className="topic-card__delete"
+          className={'topic-card__pin-btn' + (topic.isPinned ? ' topic-card__pin-btn_active' : '')}
           type="button"
-          onClick={handleDelete}
-          aria-label="Удалить топик"
+          onClick={handlePin}
+          aria-label={topic.isPinned ? 'Открепить топик' : 'Закрепить топик'}
+          title={topic.isPinned ? 'Открепить' : 'Закрепить'}
         >
-          ✕
+          📌
         </button>
-      )}
+        {isOwn && (
+          <button
+            className="topic-card__delete"
+            type="button"
+            onClick={handleDelete}
+            aria-label="Удалить топик"
+          >
+            ✕
+          </button>
+        )}
+      </div>
     </div>
   );
 }

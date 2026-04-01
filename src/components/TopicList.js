@@ -30,6 +30,22 @@ export default function TopicList({ activeTopic, onSelectTopic, user }) {
     }
   }
 
+  function handleTopicPinned(updatedTopic) {
+    setTopics((prev) => {
+      const updated = prev.map((t) => {
+        if (t._id === updatedTopic._id) return updatedTopic;
+        // Singleton: если новый топик закреплён — снять пин с остальных
+        if (updatedTopic.isPinned && t.isPinned) return { ...t, isPinned: false };
+        return t;
+      });
+      // Пересортировать: pinned первыми
+      return updated.sort((a, b) => {
+        if (a.isPinned !== b.isPinned) return b.isPinned ? 1 : -1;
+        return 0;
+      });
+    });
+  }
+
   return (
     <div className="topic-list__wrapper">
       <div className="topic-list__toolbar">
@@ -67,6 +83,7 @@ export default function TopicList({ activeTopic, onSelectTopic, user }) {
                 onSelect={onSelectTopic}
                 currentUserId={user?._id}
                 onDelete={handleTopicDeleted}
+                onPin={handleTopicPinned}
               />
             </li>
           ))}
