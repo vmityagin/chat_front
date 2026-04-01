@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { apiLogin } from '../../lib/apiClient';
+import { apiLogin, getAccessToken } from '../../lib/apiClient';
 import '../../blocks/auth-form/auth-form.css';
 
 export default function LoginPage() {
@@ -11,6 +11,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (getAccessToken()) router.replace('/');
+  }, [router]);
 
   async function handleSubmit(e) {
     e.preventDefault();

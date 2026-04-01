@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { apiFetch, apiRegister } from '../../lib/apiClient';
+import { apiFetch, apiRegister, getAccessToken } from '../../lib/apiClient';
 import '../../blocks/auth-form/auth-form.css';
 
 export default function RegisterPage() {
@@ -14,6 +14,10 @@ export default function RegisterPage() {
   const [avatars, setAvatars] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (getAccessToken()) router.replace('/');
+  }, [router]);
 
   useEffect(() => {
     apiFetch('/api/avatars')
