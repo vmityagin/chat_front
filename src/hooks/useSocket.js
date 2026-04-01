@@ -1,14 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
+import { getAccessToken } from '../lib/apiClient';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 let sharedSocket = null;
 
-function getSocket() {
+export function getSocket() {
   if (!sharedSocket) {
     sharedSocket = io(API_URL, {
-      withCredentials: true,
+      auth: { token: getAccessToken() },
       autoConnect: true,
     });
 
@@ -17,6 +18,22 @@ function getSocket() {
     });
   }
   return sharedSocket;
+}
+
+/** Обновить токен и переподключиться (после refresh) */
+export function reconnectSocket() {
+  if (sharedSocket) {
+    sharedSocket.auth = { token: getAccessToken() };
+    sharedSocket.disconnect().connect();
+  }
+}
+
+/** Отключить сокет (при logout) */
+export function disconnectSocket() {
+  if (sharedSocket) {
+    sharedSocket.disconnect();
+    sharedSocket = null;
+  }
 }
 
 /**

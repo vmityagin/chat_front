@@ -2,7 +2,7 @@
 
 @import url('./blocks/page/page.css');
 @import url('./blocks/layout/layout.css');
-@import url('./blocks/register-form/register-form.css');
+@import url('./blocks/auth-form/auth-form.css');
 @import url('./blocks/topic-list/topic-list.css');
 @import url('./blocks/topic-card/topic-card.css');
 @import url('./blocks/create-topic-form/create-topic-form.css');

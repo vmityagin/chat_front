@@ -8,7 +8,7 @@ function formatTime(dateStr) {
 }
 
 export default function MessageItem({ message, currentUserId, onDelete }) {
-  const isOwn = message.owner?._id === currentUserId || message.owner?.anonymousId === currentUserId;
+  const isOwn = message.owner?._id === currentUserId;
 
   async function handleDelete() {
     try {

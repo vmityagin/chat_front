@@ -1,0 +1,99 @@
+.auth-form {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 0 16px;
+}
+
+.auth-form__title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 24px;
+  color: #000;
+}
+
+.auth-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-form__label {
+  font-size: 14px;
+  color: #000;
+}
+
+.auth-form__input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-form__input:focus {
+  outline: none;
+  border-color: #999;
+}
+
+.auth-form__avatars {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  margin: 0;
+}
+
+.auth-form__legend {
+  font-size: 14px;
+  color: #000;
+  padding: 0 4px;
+}
+
+.auth-form__avatar-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.auth-form__avatar-img {
+  border: 2px solid transparent;
+  border-radius: 50%;
+}
+
+.auth-form__avatar-option input:checked + .auth-form__avatar-img {
+  border-color: #000;
+}
+
+.auth-form__submit {
+  padding: 8px 16px;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.auth-form__submit:hover:not(:disabled) {
+  background: #333;
+}
+
+.auth-form__submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.auth-form__link {
+  font-size: 13px;
+  color: #555;
+  margin-top: 8px;
+}
+
+.auth-form__link a {
+  color: #000;
+  text-decoration: underline;
+}
+
+.auth-form__link a:hover {
+  color: #333;
+}
