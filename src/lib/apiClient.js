@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const AVATAR_BASE_URL = process.env.NEXT_PUBLIC_CDN_URL || API_URL;
 
 // ── Токены ──────────────────────────────────────
 
@@ -41,7 +42,7 @@ export function setStoredUser(user) {
 
 export function getAvatarImageUrl(avatarId) {
   if (!avatarId) return '';
-  return `${API_URL}/avatars/${avatarId}.png`;
+  return `${AVATAR_BASE_URL}/avatars/${avatarId}.png`;
 }
 
 // ── Глобальный обработчик ошибок ────────────────
