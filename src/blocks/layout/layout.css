@@ -73,3 +73,49 @@
   color: #999;
   font-size: 14px;
 }
+
+/* ── Topic header ──────────────────────────── */
+
+.layout__topic-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.layout__topic-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Files tab ─────────────────────────────── */
+
+.layout__files-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+  margin-left: 8px;
+}
+
+.layout__files-tab:hover {
+  border-color: #4c7ce5;
+  color: #4c7ce5;
+}
+
+.layout__files-tab_active {
+  background: #4c7ce5;
+  border-color: #4c7ce5;
+  color: #fff;
+}

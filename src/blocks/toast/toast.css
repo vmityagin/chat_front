@@ -38,3 +38,12 @@
 .toast__close:hover {
   color: #000;
 }
+
+.toast_success {
+  border-color: #4caf50;
+  background: #f0faf0;
+}
+
+.toast_success .toast__message {
+  color: #2e7d32;
+}

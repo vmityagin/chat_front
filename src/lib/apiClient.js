@@ -174,3 +174,27 @@ export async function apiLogout() {
   }
   clearTokens();
 }
+
+// ── Topic Files API ─────────────────────────────
+
+export async function apiGetTopicFiles(topicId) {
+  return apiFetch(`/api/topics/${topicId}/files`);
+}
+
+export async function apiUploadTopicFile(topicId, file) {
+  const token = getAccessToken();
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch(`${API_URL}/api/topics/${topicId}/files`, {
+    method: 'POST',
+    // Content-Type не ставим — браузер сам выставит multipart/form-data с boundary
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: formData,
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    const msg = data.message || `Ошибка ${res.status}`;
+    throw Object.assign(new Error(msg), { code: data.code, status: res.status });
+  }
+  return res.json();
+}

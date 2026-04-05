@@ -16,6 +16,10 @@ export default function ToastProvider({ children }) {
     setToast({ message: message || 'Ошибка сервера', code });
   }, []);
 
+  const showSuccess = useCallback((message) => {
+    setToast({ message, type: 'success' });
+  }, []);
+
   const close = useCallback(() => setToast(null), []);
 
   useEffect(() => {
@@ -23,10 +27,10 @@ export default function ToastProvider({ children }) {
   }, [showError]);
 
   return (
-    <ToastContext.Provider value={{ showError }}>
+    <ToastContext.Provider value={{ showError, showSuccess }}>
       {children}
       {toast && (
-        <div className="toast">
+        <div className={`toast${toast.type === 'success' ? ' toast_success' : ''}`}>
           <p className="toast__message">{toast.message}</p>
           {toast.code && <p className="toast__code">{toast.code}</p>}
           <button className="toast__close" onClick={close} aria-label="Закрыть">✕</button>

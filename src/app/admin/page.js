@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { apiFetch, getAccessToken, getStoredUser } from '../../lib/apiClient';
+import AdminFilesSection from '../../components/AdminFilesSection';
 import '../../blocks/admin-page/admin-page.css';
 
 export default function AdminPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [topics, setTopics] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,8 +24,14 @@ export default function AdminPage() {
       return;
     }
 
-    apiFetch('/api/users/all')
-      .then((data) => setUsers(data))
+    Promise.all([
+      apiFetch('/api/users/all'),
+      apiFetch('/api/topics'),
+    ])
+      .then(([usersData, topicsData]) => {
+        setUsers(usersData);
+        setTopics(topicsData);
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [router]);
@@ -94,6 +102,7 @@ export default function AdminPage() {
           })}
         </tbody>
       </table>
+      <AdminFilesSection topics={topics} />
     </main>
   );
 }
