@@ -12,6 +12,7 @@ export default function MessageList({ topic, user }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
+  const [replyTo, setReplyTo] = useState(null);
   const bottomRef = useRef(null);
   const isFirstLoad = useRef(true);
   const socket = useSocket();
@@ -47,6 +48,7 @@ export default function MessageList({ topic, user }) {
   useEffect(() => {
     setMessages([]);
     setHasMore(false);
+    setReplyTo(null);
     isFirstLoad.current = true;
     loadMessages(null, true);
   }, [topic._id]);
@@ -115,12 +117,13 @@ export default function MessageList({ topic, user }) {
               currentUserId={user._id}
               isAdmin={user.role === 'admin'}
               onDelete={(id) => setMessages((prev) => prev.filter((m) => m._id !== id))}
+              onReply={setReplyTo}
             />
           ))}
         </ul>
         <div ref={bottomRef} />
       </div>
-      <MessageInput topic={topic} />
+      <MessageInput topic={topic} replyTo={replyTo} onCancelReply={() => setReplyTo(null)} />
     </div>
   );
 }

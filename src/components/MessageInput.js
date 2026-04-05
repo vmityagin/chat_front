@@ -6,7 +6,7 @@ import { useToast } from './ToastProvider';
 
 const MAX_LENGTH = 2000;
 
-export default function MessageInput({ topic }) {
+export default function MessageInput({ topic, replyTo, onCancelReply }) {
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
   const socket = useSocket();
@@ -29,6 +29,7 @@ export default function MessageInput({ topic }) {
         text: trimmed,
         topicId: topic._id,
         clientTimestamp: new Date().toISOString(),
+        ...(replyTo ? { replyToId: replyTo._id } : {}),
       },
       (ack) => {
         setSending(false);
@@ -36,6 +37,7 @@ export default function MessageInput({ topic }) {
           showError(ack.error.message, ack.error.code);
         } else {
           setText('');
+          onCancelReply?.();
           inputRef.current?.focus();
         }
       }
@@ -51,6 +53,15 @@ export default function MessageInput({ topic }) {
 
   return (
     <form className="message-input" onSubmit={handleSubmit}>
+      {replyTo && (
+        <div className="message-input__reply-preview">
+          <div className="message-input__reply-info">
+            <span className="message-input__reply-author">В ответ {replyTo.owner?.nickname}</span>
+            <p className="message-input__reply-text">{replyTo.text}</p>
+          </div>
+          <button className="message-input__reply-cancel" type="button" onClick={onCancelReply}>✕</button>
+        </div>
+      )}
       {isClosed && (
         <p className="message-input__notice">Топик закрыт — отправка недоступна</p>
       )}

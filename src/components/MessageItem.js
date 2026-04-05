@@ -7,7 +7,7 @@ function formatTime(dateStr) {
   return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
 }
 
-export default function MessageItem({ message, currentUserId, isAdmin, onDelete }) {
+export default function MessageItem({ message, currentUserId, isAdmin, onDelete, onReply }) {
   const isOwn = message.owner?._id === currentUserId;
   const canDelete = isOwn || isAdmin;
 
@@ -32,8 +32,22 @@ export default function MessageItem({ message, currentUserId, isAdmin, onDelete 
       <div className="message-item__body">
         <span className="message-item__author">{message.owner?.nickname || 'Аноним'}</span>
         <span className="message-item__time">{formatTime(message.serverTimestamp)}</span>
+        {message.replyTo && !message.replyTo.isDeleted && (
+          <div className="message-item__reply">
+            <span className="message-item__reply-author">{message.replyTo.owner?.nickname}</span>
+            <p className="message-item__reply-text">{message.replyTo.text}</p>
+          </div>
+        )}
         <p className="message-item__text">{message.text}</p>
       </div>
+      <button
+        className="message-item__reply-btn"
+        type="button"
+        onClick={() => onReply?.(message)}
+        aria-label="Ответить"
+      >
+        ↩
+      </button>
       {canDelete && (
         <button
           className="message-item__delete"
