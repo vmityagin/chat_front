@@ -7,8 +7,9 @@ function formatTime(dateStr) {
   return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
 }
 
-export default function MessageItem({ message, currentUserId, onDelete }) {
+export default function MessageItem({ message, currentUserId, isAdmin, onDelete }) {
   const isOwn = message.owner?._id === currentUserId;
+  const canDelete = isOwn || isAdmin;
 
   async function handleDelete() {
     try {
@@ -33,7 +34,7 @@ export default function MessageItem({ message, currentUserId, onDelete }) {
         <span className="message-item__time">{formatTime(message.serverTimestamp)}</span>
         <p className="message-item__text">{message.text}</p>
       </div>
-      {isOwn && (
+      {canDelete && (
         <button
           className="message-item__delete"
           type="button"

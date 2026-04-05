@@ -10,4 +10,5 @@
 @import url('./blocks/message-item/message-item.css');
 @import url('./blocks/message-input/message-input.css');
 
+@import url('./blocks/admin-page/admin-page.css');
 @import url('./blocks/toast/toast.css');

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import TopicList from './TopicList';
 import MessageList from './MessageList';
 import { getAvatarImageUrl, apiFetch, getStoredUser, setStoredUser, apiLogout } from '../lib/apiClient';
@@ -19,7 +20,7 @@ export default function ChatApp() {
 
     apiFetch('/api/users/me')
       .then((data) => {
-        const u = { _id: data._id, email: data.email, nickname: data.nickname, avatarId: data.avatarId };
+        const u = { _id: data._id, email: data.email, nickname: data.nickname, avatarId: data.avatarId, role: data.role };
         setStoredUser(u);
         setUser(u);
       })
@@ -51,6 +52,9 @@ export default function ChatApp() {
             height={32}
           />
           <span className="layout__user-name">{user.nickname}</span>
+          {user.role === 'admin' && (
+            <Link href="/admin" className="layout__admin-link">Админка</Link>
+          )}
           <button className="layout__logout" type="button" onClick={handleLogout}>
             Выйти
           </button>

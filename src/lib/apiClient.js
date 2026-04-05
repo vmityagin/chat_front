@@ -141,7 +141,7 @@ export async function apiRegister({ email, password, nickname, avatarId }) {
     body: { email, password, nickname, avatarId },
   });
   setTokens(data.accessToken, data.refreshToken);
-  const user = { _id: data._id, email: data.email, nickname: data.nickname, avatarId: data.avatarId };
+  const user = { _id: data._id, email: data.email, nickname: data.nickname, avatarId: data.avatarId, role: data.role };
   setStoredUser(user);
   return user;
 }
@@ -152,9 +152,14 @@ export async function apiLogin({ email, password }) {
     body: { email, password },
   });
   setTokens(data.accessToken, data.refreshToken);
-  const user = { _id: data._id, email: data.email, nickname: data.nickname, avatarId: data.avatarId };
+  const user = { _id: data._id, email: data.email, nickname: data.nickname, avatarId: data.avatarId, role: data.role };
   setStoredUser(user);
   return user;
+}
+
+export function isAdmin() {
+  const user = getStoredUser();
+  return user?.role === 'admin';
 }
 
 export async function apiLogout() {

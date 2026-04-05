@@ -1,8 +1,7 @@
 import React from 'react';
 import { apiFetch } from '../lib/apiClient';
 
-export default function TopicCard({ topic, isActive, onSelect, currentUserId, onDelete, onPin }) {
-  const isOwn = topic.createdBy && topic.createdBy.toString() === currentUserId?.toString();
+export default function TopicCard({ topic, isActive, onSelect, isAdmin, onDelete, onPin }) {
 
   async function handleDelete(e) {
     e.stopPropagation();
@@ -51,17 +50,17 @@ export default function TopicCard({ topic, isActive, onSelect, currentUserId, on
         )}
         <span className="topic-card__meta">{topic.messageCount} сообщ.</span>
       </div>
-      <div className="topic-card__actions">
-        <button
-          className={'topic-card__pin-btn' + (topic.isPinned ? ' topic-card__pin-btn_active' : '')}
-          type="button"
-          onClick={handlePin}
-          aria-label={topic.isPinned ? 'Открепить топик' : 'Закрепить топик'}
-          title={topic.isPinned ? 'Открепить' : 'Закрепить'}
-        >
-          📌
-        </button>
-        {isOwn && (
+      {isAdmin && (
+        <div className="topic-card__actions">
+          <button
+            className={'topic-card__pin-btn' + (topic.isPinned ? ' topic-card__pin-btn_active' : '')}
+            type="button"
+            onClick={handlePin}
+            aria-label={topic.isPinned ? 'Открепить топик' : 'Закрепить топик'}
+            title={topic.isPinned ? 'Открепить' : 'Закрепить'}
+          >
+            📌
+          </button>
           <button
             className="topic-card__delete"
             type="button"
@@ -70,8 +69,8 @@ export default function TopicCard({ topic, isActive, onSelect, currentUserId, on
           >
             ✕
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

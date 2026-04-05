@@ -48,23 +48,27 @@ export default function TopicList({ activeTopic, onSelectTopic, user }) {
 
   return (
     <div className="topic-list__wrapper">
-      <div className="topic-list__toolbar">
-        {!showForm && (
-          <button
-            className="topic-list__create-btn"
-            type="button"
-            onClick={() => setShowForm(true)}
-          >
-            + Новый топик
-          </button>
-        )}
-      </div>
+      {user?.role === 'admin' && (
+        <>
+          <div className="topic-list__toolbar">
+            {!showForm && (
+              <button
+                className="topic-list__create-btn"
+                type="button"
+                onClick={() => setShowForm(true)}
+              >
+                + Новый топик
+              </button>
+            )}
+          </div>
 
-      {showForm && (
-        <CreateTopicForm
-          onCreated={handleTopicCreated}
-          onCancel={() => setShowForm(false)}
-        />
+          {showForm && (
+            <CreateTopicForm
+              onCreated={handleTopicCreated}
+              onCancel={() => setShowForm(false)}
+            />
+          )}
+        </>
       )}
 
       {loading && <p className="topic-list__loading">Загрузка топиков...</p>}
@@ -81,7 +85,7 @@ export default function TopicList({ activeTopic, onSelectTopic, user }) {
                 topic={topic}
                 isActive={activeTopic?._id === topic._id}
                 onSelect={onSelectTopic}
-                currentUserId={user?._id}
+                isAdmin={user?.role === 'admin'}
                 onDelete={handleTopicDeleted}
                 onPin={handleTopicPinned}
               />

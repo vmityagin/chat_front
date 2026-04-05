@@ -1,0 +1,70 @@
+.admin-page {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.admin-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.admin-page__title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  color: #000;
+}
+
+.admin-page__back {
+  font-size: 13px;
+  color: #555;
+  text-decoration: none;
+}
+
+.admin-page__back:hover {
+  color: #000;
+}
+
+.admin-page__loading {
+  text-align: center;
+  color: #999;
+  margin-top: 80px;
+}
+
+.admin-page__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.admin-page__table th {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 2px solid #000;
+  font-weight: bold;
+  color: #000;
+}
+
+.admin-page__table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.admin-page__table tr:hover td {
+  background: #f9f9f9;
+}
+
+.admin-page__table input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.admin-page__table input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}

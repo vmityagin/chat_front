@@ -113,6 +113,7 @@ export default function MessageList({ topic, user }) {
               key={msg._id}
               message={msg}
               currentUserId={user._id}
+              isAdmin={user.role === 'admin'}
               onDelete={(id) => setMessages((prev) => prev.filter((m) => m._id !== id))}
             />
           ))}
